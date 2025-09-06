@@ -1,0 +1,48 @@
+@use "./variables" as *;
+
+##{$prefix}-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  width: 100dvw;
+  max-height: 75%;
+  max-height: 75dvh;
+  overflow-y: auto;
+  background-color: var(--#{$prefix}-bg-color);
+  color: var(--#{$prefix}-text-color);
+  box-shadow: var(--#{$prefix}-banner-shadow);
+  padding: clamp(0.5rem, 3vw, 5rem);
+  display: flex;
+  gap: clamp(0.5rem, 3vw, 5rem);
+  justify-content: space-between;
+  align-items: center;
+  z-index: var(--#{$prefix}-z-index);
+  line-height: 1.5;
+  > div.__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  opacity: 0;
+  &.__visible {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  ##{$prefix}-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    > div.__actions {
+      flex-direction: column;
+      width: 75%;
+      width: 75dvw;
+      button {
+        width: 100%;
+        max-width: 220px;
+      }
+    }
+  }
+}

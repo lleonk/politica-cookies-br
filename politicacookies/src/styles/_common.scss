@@ -1,0 +1,34 @@
+@use "./variables" as *;
+
+@use "./mixins" as mx;
+
+@media (prefers-color-scheme: light) {
+  @include mx.lightmode;
+}
+
+@media (prefers-color-scheme: dark) {
+  @include mx.darkmode;
+}
+
+.#{$prefix}__common {
+  font-family: inherit;
+  font-size: small;
+  box-sizing: border-box;
+  button {
+    user-select: none;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--#{$prefix}-primary-color);
+    color: var(--#{$prefix}-bg-color);
+    padding: 0.5rem 0.75rem;
+    text-wrap: nowrap;
+    font-size: 0.925em;
+    &:hover {
+      filter: brightness(var(--#{$prefix}-btn-hover-brightness));
+      cursor: pointer;
+    }
+    &.secondary {
+      background-color: var(--#{$prefix}-secondary-color);
+    }
+  }
+}

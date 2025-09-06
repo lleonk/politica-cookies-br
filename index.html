@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            padding: 16px;
+        }
+
+        .item {
+            width: 100%;
+        }
+    </style>
+</head>
+<body style="font-family: 'Noto Sans'; font-size: medium; line-height: 1.2rem;">
+<p>Página para desenvolvimento do banner de cookies</p>
+<p>Um outro componente da pagina</p>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cookieName = 'sf_cookie_consent';
+
+        if (!getCookie(cookieName)) {
+            criaBannerNivel1();
+        }
+
+        function getCookie(name) {
+            const value = "; " + document.cookie;
+            const parts = value.split("; " + name + "=");
+            if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+
+        function criaBannerNivel1() {
+            const banner = document.createElement('div');
+            banner.id = 'cookie-banner';
+            banner.innerHTML = `
+                    <div class="container" style="font-family: 'Noto Sans';font-size: small;">
+                        <div class="item" style="flex-basis: 55%; flex-shrink: 0;">                   
+                            <span>
+                                Para melhorar a sua experiência em nossos sistemas e prover serviços personalizados, utilizamos cookies. 
+                                <strong>Ao aceitar, você terá acesso a todas as funcionalidades do site. 
+                                Se clicar em "Rejeitar Cookies", os cookies que não forem estritamente necessários serão desativados.</strong> 
+                                Para escolher quais quer autorizar, clique em "GERENCIAR COOKIES". 
+                                Saiba mais em nossa <strong>Declaração de Cookies</strong>.
+                            </span>
+                        </div>
+
+                        <div class="item" style="display: flex; justify-content: center; align-items: center; gap:16px;">
+                            <button id="manage-cookies" style="padding:8px 16px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+                                GERENCIAR COOKIES
+                            </button>
+                            <button id="reject-cookies" style="padding:8px 16px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+                                REJEITAR COOKIES
+                            </button>
+                            <button id="accept-cookies" style="padding:8px 16px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+                                ACEITAR COOKIES
+                            </button>
+                        </div>
+                    </div>
+                `;
+            banner.style.position = 'fixed';
+            banner.style.left = '0';
+            banner.style.right = '0';
+            banner.style.bottom = '0';
+            banner.style.background = '#014781';
+            banner.style.color = '#fff';
+            banner.style.zIndex = '9999';
+            banner.style.boxShadow = '0 -2px 8px rgba(0,0,0,0.2)';
+            document.body.appendChild(banner);
+
+            document.getElementById('accept-cookies').onclick = function() {
+                var consent = JSON.stringify({ "c1": true, "c2": true, "c3": true, "c4": true });
+                document.cookie = cookieName + "=" + consent + "; path=/; max-age=" + (60*60*24*365);
+                banner.remove();
+            };
+
+            document.getElementById('reject-cookies').onclick = function() {
+                var consent = JSON.stringify({ "c1": true, "c2": false, "c3": false, "c4": false });
+                document.cookie = cookieName + "=" + encodeURIComponent(consent) + "; path=/; max-age=" + (60*60*24*365);
+                banner.remove();
+            };
+
+            document.getElementById('manage-cookies').onclick = function() {
+                // Remove o banner de nível 1
+                const cookieBanner = document.getElementById('cookie-banner');
+                if (cookieBanner) cookieBanner.remove();
+
+                // Cria e exibe o banner de nível 2 (política de cookies)
+                const policyBanner = document.createElement('div');
+                policyBanner.id = 'policy-banner';
+                policyBanner.innerHTML = `
+                        <div style="font-size:0.8rem;max-width:600px;margin:auto;max-height:400px;overflow-y:auto;padding:24px;background:#fff;color:#222;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,0.2);position:fixed;left:0;right:0;bottom:80px;z-index:10000;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;">
+                                <h3 style="margin-top:0;">Preferências de Cookies</h3>
+                                <button id="policy-close" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:#222;padding:0 8px;">&#10005;</button>
+                            </div>
+                            <form id="cookie-policy-form">
+                                <label style="display:block;margin-bottom:8px;">
+                                    <input type="checkbox" name="c1" checked disabled>
+                                    Cookies estritamente necessários (sempre ativos)
+                                </label>
+                                <p style="margin-left:24px;">Esses cookies permitem funcionalidades essenciais, tais como segurança, verificação de identidade e gestão de rede. Esses cookies não podem ser desativados em nossos sistemas. Embora sejam necessários, você pode bloquear esses cookies diretamente no seu navegador, mas isso pode comprometer sua experiência e prejudicar o funcionamento do site.</p>
+                                
+                                <label style="display:block;margin-bottom:8px;">
+                                    <input type="checkbox" name="c2">
+                                    Cookies de desempenho
+                                </label>
+                                <p style="margin-left:24px;">Visam a melhoria do desempenho do site por meio da coleta de dados anonimizados sobre navegação e uso dos recursos disponibilizados. Se você não permitir a coleta desses cookies, esses dados não serão usados para melhoria do site.</p>
+                                
+                                <label style="display:block;margin-bottom:8px;">
+                                    <input type="checkbox" name="c3">
+                                    Cookies de funcionalidade
+                                </label>
+                                <p style="margin-left:24px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam ab a ratione id ipsa mollitia, repellendus facilis commodi sapiente possimus illum, eos officia asperiores natus consectetur nesciunt dolor dignissimos temporibus!</p>
+
+                                <label style="display:block;margin-bottom:16px;">
+                                    <input type="checkbox" name="c4">
+                                    Cookies de publicidade
+                                </label>
+                                <p style="margin-left:24px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam ab a ratione id ipsa mollitia, repellendus facilis commodi sapiente possimus illum, eos officia asperiores natus consectetur nesciunt dolor dignissimos temporibus!</p>
+                                
+                                <div style="display:flex;justify-content:space-evenly;">
+                                    <button type="button" id="policy-accept" style="padding:8px 16px;background:#007bff;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+                                        ACEITAR SELECIONADOS
+                                    </button>
+                                    <button type="button" id="policy-cancel" style="padding:8px 16px;background:#888;color:#fff;border:none;border-radius:4px;cursor:pointer;">
+                                        FECHAR
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    `;
+                document.body.appendChild(policyBanner);
+
+                document.getElementById('policy-cancel').onclick = function() {
+                    policyBanner.remove();
+                    criaBannerNivel1();
+                };
+
+                document.getElementById('policy-close').onclick = function() {
+                    policyBanner.remove();
+                    criaBannerNivel1();
+                };
+
+                document.getElementById('policy-accept').onclick = function() {
+                    const form = document.getElementById('cookie-policy-form');
+                    const consent = {
+                        c1: true,
+                        c2: form.c2.checked,
+                        c3: form.c3.checked,
+                        c4: form.c4.checked
+                    };
+                    document.cookie = cookieName + "=" + encodeURIComponent(JSON.stringify(consent)) + "; path=/; max-age=" + (60*60*24*365);
+                    policyBanner.remove();
+                    banner.remove();
+                };
+            };
+        }
+    });
+</script>
+</body>
+</html>
