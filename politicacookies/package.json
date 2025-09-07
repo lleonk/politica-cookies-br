@@ -1,6 +1,6 @@
 {
   "name": "politica-cookies-br",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Interface para gerenciar consentimento de cookies em aplicações web.",
   "license": "MIT",
   "type": "module",
