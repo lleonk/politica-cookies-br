@@ -18,6 +18,8 @@
       "import": "./dist/index.js"
     }
   },
+  "./style.css": "./dist/style.css",
+  "./dist/style.css": "./dist/style.css",
   "scripts": {
     "build": "tsup src/index.ts && tsx src/variables-scss.ts && sass src/styles/styles.scss dist/style.css --style=compressed",
     "prepublishOnly": "npm run build"
