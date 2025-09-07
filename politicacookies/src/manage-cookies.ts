@@ -4,6 +4,7 @@ import {
   destroyBanner,
   destroyManageCookiesDialog,
   destroyManageCookiesDialogOverlay,
+  getConsent,
   getManageCookiesDialog,
   hideBanner,
   saveChoice,
@@ -11,6 +12,9 @@ import {
 } from "./helpers";
 import { PoliticaCookiesBrConsent } from "./types";
 
+/**
+ * Abre o diálogo para gerenciar cookies.
+ */
 function manageCookies() {
   hideBanner();
 
@@ -18,12 +22,27 @@ function manageCookies() {
 
   createManageCookiesOverlay();
 
+  const form = getForm();
+
+  const consent = getConsent();
+
+  if (consent) {
+    form
+      .querySelectorAll("input[type='checkbox']")
+      .forEach((checkbox) => {
+        const name = checkbox.getAttribute("name");
+        if (name && consent.hasOwnProperty(name)) {
+          // @ts-ignore
+          checkbox.checked = consent[name];
+        }
+      });
+  }
+
   /**
    * Pequeno atraso para usuários que usam 'duplo clique' para clicar em botões.
    */
   setTimeout(() => {
-    const form = getForm();
-    form?.addEventListener("click", onFormClick);
+    form.addEventListener("click", onFormClick);
   }, 300);
 }
 

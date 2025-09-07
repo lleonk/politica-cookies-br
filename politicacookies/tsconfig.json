@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
     "target": "ES6",
     "module": "ESNext",
     "declaration": true,

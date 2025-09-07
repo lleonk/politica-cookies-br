@@ -22,6 +22,10 @@ function addCommonCss(el: HTMLElement) {
   el.classList.add(`${__PREFIX__}__common`);
 }
 
+/**
+ * Retorna o consentimento salvo no cookie.
+ * @returns O consentimento salvo ou null se não existir.
+ */
 function getConsent(): PoliticaCookiesBrConsent | null {
   const { storageKey } = getOptions();
   try {
@@ -61,27 +65,16 @@ function rejectAllCookies() {
 
 function saveChoice(value: PoliticaCookiesBrConsent) {
   const { storageKey } = getOptions();
-  try {
-    document.cookie = `${storageKey}=${JSON.stringify(
-      value
-    )}; path=/; max-age=${60 * 60 * 24 * 365}`;
-    if (!hasConsent()) {
-      throw "Não foi possível salvar suas preferências. Os cookies estão desabilitados ou bloqueados no seu navegador.";
-    }
-    emitConsent();
-  } catch (err) {
-    alert(err);
-  }
-}
+  document.cookie = `${storageKey}=${JSON.stringify(
+    value
+  )}; SameSite=Strict; path=/; max-age=${60 * 60 * 24 * 365}`;
 
-function emitConsent() {
-  const consent = getConsent();
-  if (consent) {
-    const event: CustomEvent<PoliticaCookiesBrConsent> =
-      new CustomEvent("politicaCookiesBr:consent", {
-        detail: consent,
-      });
-    window.dispatchEvent(event);
+  if (!hasConsent()) {
+    throw "Não foi possível salvar suas preferências. Os cookies estão desabilitados ou bloqueados no seu navegador.";
+  }
+
+  if (_opts.onSave && typeof _opts.onSave === "function") {
+    _opts.onSave(value);
   }
 }
 

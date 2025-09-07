@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "Interface para gerenciar consentimento de cookies em aplicações web.",
   "license": "MIT",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "unpkg": "dist/index.umd.js",
-  "jsdelivr": "dist/index.umd.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "scripts": {
     "build": "tsup src/index.ts && tsx src/variables-scss.ts && sass src/styles/styles.scss dist/style.css --style=compressed",
     "prepublishOnly": "npm run build"
