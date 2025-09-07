@@ -4,6 +4,10 @@
   "description": "Interface para gerenciar consentimento de cookies em aplicações web.",
   "license": "MIT",
   "type": "module",
+  "main": "./dist/index.global.js",
+  "module": "./dist/index.js",
+  "unpkg": "./dist/index.global.js",
+  "jsdelivr": "./dist/index.global.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
