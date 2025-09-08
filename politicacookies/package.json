@@ -1,7 +1,7 @@
 {
   "name": "politica-cookies-br",
   "version": "1.0.5",
-  "description": "Interface para gerenciar consentimento de cookies em aplicações web.",
+  "description": "Interface para gerenciar consentimento de cookies em aplicações web da Secretaria Municipal da Fazenda de São Paulo.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.global.js",
