@@ -1,22 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>esm</title>
+<html lang="pt-br">
 
-    <link
-      rel="stylesheet"
-      href="./../politicacookies/dist/style.css"
-    />
-    <script type="module" src="index.js"></script>
-  </head>
-  <body>
-    <button data-action="manage">Gerenciar Cookies</button>
-    <button data-action="consent">Consentimento salvo</button>
-    <button data-action="reset">Redefinir Cookies</button>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>esm</title>
+
+  <style>
+    body {
+      font-family: Geneva, Tahoma, sans-serif;
+    }
+  </style>
+
+  <!-- Teste do pacote localmente -->
+  <!--<link rel="stylesheet" href="./../politicacookies/dist/style.css" />-->
+  <!--<script type="module" src="index.js"></script>-->
+
+  <!-- Teste do pacote já publicado -->
+  <link rel="stylesheet" href="https://unpkg.com/politica-cookies-br@1.0.5/dist/style.css">
+  <script src="https://unpkg.com/politica-cookies-br@1.0.5"></script>
+</head>
+
+<body>
+  <button data-action="manage">Gerenciar Cookies</button>
+  <button data-action="consent">Consentimento salvo</button>
+  <button data-action="reset">Redefinir Cookies</button>
+
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        PoliticaCookiesBr.init();
+      }, 2000);
+    });
+
+    const botaoGerenciarCookies = document.querySelector('[data-action="manage"]');
+    botaoGerenciarCookies.addEventListener('click', () => {
+      PoliticaCookiesBr.manageCookies();
+    });
+
+    const botaoObterConsentimento = document.querySelector('[data-action="consent"]');
+    botaoObterConsentimento.addEventListener('click', () => {
+      console.log(PoliticaCookiesBr.getConsent());
+    });
+
+    const botaoRedefinirBookies = document.querySelector('[data-action="reset"]');
+    botaoRedefinirBookies.addEventListener('click', () => {
+      cookieStore.delete("politica-cookies-br");
+    });
+  </script>
+</body>
+
 </html>
