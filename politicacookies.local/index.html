@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>esm</title>
-    
-    <link
-      rel="stylesheet"
-      href="./../politicacookies/dist/style.css"
-    />    
-    <style>
-      body {
-        font-family: Geneva, Tahoma, sans-serif;
-      }
-    </style>    
+<html lang="pt-br">
 
-    <!-- Teste do pacote localmente -->
-    <!--<script type="module" src="index.js"></script>-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>esm</title>
 
-    <!-- Teste do pacote já publicado -->
-    <script src="https://unpkg.com/politica-cookies-br@1.0.5"></script>
-  </head>
-  <body>
-    <button data-action="manage">Gerenciar Cookies</button>
-    <button data-action="consent">Consentimento salvo</button>
-    <button data-action="reset">Redefinir Cookies</button>
-    
-    <script>
-      window.addEventListener('load', () => {
+  <link rel="stylesheet" href="./../politicacookies/dist/style.css" />
+  <style>
+    body {
+      font-family: Geneva, Tahoma, sans-serif;
+    }
+  </style>
+
+  <!-- Teste do pacote localmente -->
+  <!--<script type="module" src="index.js"></script>-->
+
+  <!-- Teste do pacote já publicado -->
+  <link rel="stylesheet" href="https://unpkg.com/politica-cookies-br@1.0.5/dist/style.css">
+  <script src="https://unpkg.com/politica-cookies-br@1.0.5"></script>
+</head>
+
+<body>
+  <button data-action="manage">Gerenciar Cookies</button>
+  <button data-action="consent">Consentimento salvo</button>
+  <button data-action="reset">Redefinir Cookies</button>
+
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
         PoliticaCookiesBr.init();
-      });
-      
-      const botaoGerenciarCookies = document.querySelector('[data-action="manage"]');
-      botaoGerenciarCookies.addEventListener('click', () => {
-        PoliticaCookiesBr.manageCookies();
-      });
+      }, 2000);
+    });
 
-      const botaoObterConsentimento = document.querySelector('[data-action="consent"]');
-      botaoObterConsentimento.addEventListener('click', () => {
-        console.log(PoliticaCookiesBr.getConsent());
-      });
+    const botaoGerenciarCookies = document.querySelector('[data-action="manage"]');
+    botaoGerenciarCookies.addEventListener('click', () => {
+      PoliticaCookiesBr.manageCookies();
+    });
 
-      const botaoRedefinirBookies = document.querySelector('[data-action="reset"]');
-      botaoRedefinirBookies.addEventListener('click', () => {
-        cookieStore.delete("politica-cookies-br");
-      });
-    </script>
-  </body>
+    const botaoObterConsentimento = document.querySelector('[data-action="consent"]');
+    botaoObterConsentimento.addEventListener('click', () => {
+      console.log(PoliticaCookiesBr.getConsent());
+    });
+
+    const botaoRedefinirBookies = document.querySelector('[data-action="reset"]');
+    botaoRedefinirBookies.addEventListener('click', () => {
+      cookieStore.delete("politica-cookies-br");
+    });
+  </script>
+</body>
+
 </html>
