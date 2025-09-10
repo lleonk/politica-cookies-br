@@ -1,12 +1,29 @@
-export default `
+import { getOptions } from "../helpers";
+
+function getManageTemplate() {
+  const { termsOfUseUrl } = getOptions();
+
+  const isDomainSf = window.location.hostname.endsWith(
+    ".sf.prefeitura.sp.gov.br"
+  );
+
+  const url =
+    termsOfUseUrl ||
+    (isDomainSf
+      ? "https://legislacao.prefeitura.sp.gov.br/leis/portaria-secretaria-municipal-da-fazenda-sf-77-de-23-de-abril-de-2021"
+      : "");
+
+  const termsOfUseTemplate = !url
+    ? ""
+    : `<p>Para mais informações, consulte nossos <a target="_blank" href="${url}">Termos de uso</a>.</p>`;
+
+  return `
 <form>
     <div>
         <h3>Preferências de Cookies</h3>
         <button type="button" data-action="close" class="close-button">&#10005;</button>
     </div>
-    
-    <p>Para mais informações consulte o <strong><a target="_blank" href="https://legislacao.prefeitura.sp.gov.br/leis/portaria-secretaria-municipal-da-fazenda-sf-77-de-23-de-abril-de-2021">Aviso de Privacidade e os Termos de Uso</a></strong> estabelecidos pela Secretaria Municipal de Fazenda de São Paulo.</p>
-                        
+                            
     <label>
         <input type="checkbox" name="c1" checked disabled>
         Cookies estritamente necessários (sempre ativos)
@@ -31,7 +48,11 @@ export default `
     </label>
     <p>Usados para exibir anúncios relevantes com base nos seus interesses. Também ajudam a medir a eficácia das campanhas publicitárias e limitar a repetição de anúncios.</p>
     
-    <p>Para gerenciar os cookies diretamente em seu navegador recomendamos a leitura dos seguintes links:</p>
+    <br />
+
+    ${termsOfUseTemplate}
+
+    <p>Para gerenciar os cookies diretamente em seu navegador, recomendamos a leitura dos seguintes links:</p>
     <ul>
         <li><a target="_blank" href="https://support.google.com/chrome/answer/95647?hl=pt-BR&co=GENIE.Platform%3DDesktop#zippy=%2Cexcluir-cookies-de-um-site">Chrome</a></li>
         <li><a target="_blank" href="https://support.microsoft.com/pt-br/windows/gerencie-cookies-no-microsoft-edge-exibir-permitir-bloquear-excluir-e-usar-168dab11-0753-043d-7c16-ede5947fc64d">Microsoft Edge</a></li>
@@ -44,3 +65,6 @@ export default `
         <button type="button" data-action="close" class="secondary">FECHAR</button>
     </div>
 </form>`;
+}
+
+export { getManageTemplate };

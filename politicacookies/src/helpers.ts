@@ -4,12 +4,13 @@ import {
   PoliticaCookiesBrConsent,
 } from "./types";
 import pkg from "../package.json";
-import manageTemplate from "./templates/manage-template";
 import { manageCookies } from "./manage-cookies";
+import { getManageTemplate } from "./templates/manage-template";
 
 const _opts: PoliticaCookiesBrOptions = {
   storageKey: pkg.name,
   zIndex: 1000,
+  termsOfUseUrl: "",
 };
 
 let _banner: HTMLElement | null = null;
@@ -129,7 +130,7 @@ function createManageCookiesDialog() {
   _manageDialog = document.createElement("div");
   _manageDialog.id = `${__PREFIX__}-manage`;
   addCommonCss(_manageDialog);
-  _manageDialog.innerHTML = manageTemplate;
+  _manageDialog.innerHTML = getManageTemplate();
   _manageDialog.style.zIndex = `${getOptions().zIndex! + 1}`;
   document.body.appendChild(_manageDialog);
 }

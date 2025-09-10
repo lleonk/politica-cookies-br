@@ -20,6 +20,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+    line-height: 1.5;
 
     > div:first-child {
       display: flex;
@@ -49,14 +50,32 @@
       font-size: small;
       margin: 0;
       padding: 0 1rem;
-      line-height: 1.5;
     }
 
     > div:last-child {
       display: flex;
       justify-content: flex-end;
       gap: 1rem;
-      padding: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--politicacookiesbr-secondary-color);
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.25rem;
+    }
+
+    a,
+    a:link,
+    a:active,
+    a:visited,
+    a:hover {
+      color: var(--politicacookiesbr-primary-color);
     }
   }
 
